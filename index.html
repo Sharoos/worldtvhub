@@ -20,18 +20,15 @@
       --card: #fff;
       --hover: #e2e2e2;
     }
-
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     html, body {
       height: 100%;
       overflow: hidden;
     }
-
     body {
       display: flex;
       flex-direction: column;
@@ -40,7 +37,6 @@
       background: var(--bg);
       min-height: 100dvh;
     }
-
     header {
       display: flex;
       flex-wrap: wrap;
@@ -51,29 +47,24 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       z-index: 10;
     }
-
     header .title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
     }
-
     header h2 {
       font-size: 1.2rem;
       margin: 0;
       white-space: nowrap;
     }
-
     .ss-main {
       max-width: 300px;
       flex-shrink: 0;
     }
-
     .ss-main .ss-single-selected {
       padding: 0.5rem;
     }
-
     .ss-main .ss-value-text img {
       vertical-align: middle;
       margin-right: 6px;
@@ -82,15 +73,34 @@
       border-radius: 2px;
     }
 
-    input#search {
+    .search-container {
+      position: relative;
       flex-grow: 1;
       min-width: 160px;
-      padding: 0.5rem;
+    }
+
+    input#search {
+      width: 100%;
+      padding: 0.5rem 2rem 0.5rem 0.5rem;
       border: 1px solid #ccc;
       border-radius: 6px;
       background: var(--card);
       color: var(--text);
       font-size: 0.95rem;
+    }
+
+    .clear-btn {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 1rem;
+      color: #888;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
     }
 
     button {
@@ -101,14 +111,12 @@
       color: var(--text);
       cursor: pointer;
     }
-
     main {
       display: flex;
       flex: 1;
       overflow: hidden;
       min-height: 0;
     }
-
     #list {
       width: 500px;
       overflow-y: auto;
@@ -117,19 +125,17 @@
       scrollbar-width: thin;
       scrollbar-color: #ccc transparent;
     }
-
     #list::-webkit-scrollbar {
       width: 10px;
     }
-
     #list::-webkit-scrollbar-thumb {
       background-color: #ccc;
       border-radius: 4px;
     }
-
     .item {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0.5rem;
       margin-bottom: 0.5rem;
       background: var(--card);
@@ -137,20 +143,37 @@
       cursor: pointer;
       transition: background 0.1s;
     }
-
     .item:hover {
       background: var(--hover);
     }
-
+    .item-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+      overflow: hidden;
+    }
     .item img {
       width: 60px;
       height: 40px;
       object-fit: contain;
-      margin-right: 0.75rem;
       border-radius: 4px;
       background: #fff;
     }
-
+    .item span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .fav-btn {
+      font-size: 1.1rem;
+      color: gold;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .not-fav {
+      color: gray;
+    }
     #playerPane {
       flex: 1;
       display: flex;
@@ -159,12 +182,10 @@
       padding: 1rem;
       overflow-y: auto;
     }
-
     #now {
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
-
     .video-wrapper {
       position: relative;
       width: 100%;
@@ -173,7 +194,6 @@
       margin-bottom: 1rem;
       overflow: hidden;
     }
-
     video {
       position: absolute;
       inset: 0;
@@ -183,7 +203,6 @@
       border: none;
       object-fit: cover;
     }
-
     #footer {
       flex-shrink: 0;
       background: var(--card);
@@ -192,71 +211,46 @@
       color: var(--text);
       padding: 0.75rem 1rem;
       border-top: 1px solid #ddd;
-
     }
-
     #sideborder {
       width: 30px;
       background: var(--card);
       height: 100%;
     }
-
-    body.dark .ss-main {
-      background-color: var(--card);
-      color: var(--text);
-      border: 1px solid #666;
-    }
-
-    body.dark .ss-main .ss-single-selected,
-    body.dark .ss-main .ss-value,
-    body.dark .ss-main .ss-content {
-      background-color: var(--card);
-      color: var(--text);
-    }
-
     @media (max-width: 768px) {
       header {
         flex-direction: column;
         align-items: stretch;
       }
-
-      .ss-main,
-      input#search {
+      .ss-main, .search-container {
         width: 100% !important;
         max-width: 100% !important;
         margin-bottom: 0.5rem;
       }
-
       main {
         flex-direction: column;
       }
-
       #list {
         width: 100%;
         max-height: 250px;
         overflow-y: auto;
         border-bottom: 1px solid #ddd;
       }
-
       .item img {
         width: 50px;
         height: 35px;
       }
-
       #sideborder {
         display: none;
       }
     }
-
     @media (max-width: 480px) {
       header h2 {
         font-size: 1rem;
       }
-
       #now {
         font-size: 0.95rem;
       }
-
       #footer {
         font-size: 0.75rem;
         padding: 0.5rem;
@@ -264,17 +258,19 @@
     }
   </style>
 </head>
-<body class="dark">
+<body>
   <header>
     <div class="title-row">
       <h2>📺 World Tv Hub</h2>
-      <button onclick="document.body.classList.toggle('dark')">🌓</button>
+      <button onclick="toggleTheme()">🌓</button>
     </div>
     <select id="countrySelect"></select>
     <select id="category"></select>
-    <input id="search" placeholder="Search Channel..." />
+    <div class="search-container">
+      <input id="search" placeholder="Search Channel..." />
+      <button class="clear-btn" onclick="clearSearch()">×</button>
+    </div>
   </header>
-
   <main>
     <section id="playerPane">
       <div id="now">Channel Name</div>
@@ -282,13 +278,10 @@
         <video id="player" controls autoplay></video>
       </div>
     </section>
-
     <aside id="list">Loading...</aside>
     <div id="sideborder"></div>
   </main>
-
-  <footer id="footer">World Tv Hub 📺 All rights reserved.</footer>
-
+  <footer id="footer">© <span id="year"></span> World Tv Hub 📺 All rights reserved.</footer>
   <script>
     const countrySelect = document.getElementById('countrySelect'),
           categoryEl = document.getElementById('category'),
@@ -298,21 +291,49 @@
           video = document.getElementById('player');
 
     let channelsDB = [], streams = [], filtered = [];
+    let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    function isFavorite(id) {
+      return favorites.includes(id);
+    }
+
+    function toggleFavorite(id) {
+      if (isFavorite(id)) {
+        favorites = favorites.filter(f => f !== id);
+      } else {
+        favorites.push(id);
+      }
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      render();
+    }
+
+    async function fetchLatestData() {
+      const [channels, streamList] = await Promise.all([
+        fetch('https://iptv-org.github.io/api/channels.json').then(r => r.json()),
+        fetch('https://iptv-org.github.io/api/streams.json').then(r => r.json())
+      ]);
+      channelsDB = channels;
+      streams = streamList.filter(s => s.channel && s.url);
+    }
 
     async function init() {
-      const [channels, streamList, countries, categories] = await Promise.all([
-        fetch('https://iptv-org.github.io/api/channels.json').then(r => r.json()),
-        fetch('https://iptv-org.github.io/api/streams.json').then(r => r.json()),
+      if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+      else document.body.classList.remove('dark');
+
+      await fetchLatestData();
+
+      const [countries, categories] = await Promise.all([
         fetch('https://iptv-org.github.io/api/countries.json').then(r => r.json()),
         fetch('https://iptv-org.github.io/api/categories.json').then(r => r.json())
       ]);
 
-      channelsDB = channels;
-      streams = streamList.filter(s => s.channel && s.url);
-
       countrySelect.innerHTML = `<option value="all">🌍 All Countries</option>` +
         countries.map(c => `<option value="${c.code}">${c.name}</option>`).join('');
-
       categoryEl.innerHTML = `<option value="all">📁 All Categories</option>` +
         categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
 
@@ -324,6 +345,18 @@
       searchEl.addEventListener('input', render);
 
       refresh();
+
+      setInterval(async () => {
+        await fetchLatestData();
+        refresh();
+        console.log("🔄 Channel list refreshed");
+      }, 300000); // Every 5 minutes
+
+      const lastId = localStorage.getItem('lastChannel');
+      setTimeout(() => {
+        const channel = filtered.find(c => c.id === lastId) || filtered[0];
+        if (channel) playById(channel.id);
+      }, 500);
     }
 
     function refresh() {
@@ -348,18 +381,34 @@
 
     function render() {
       const q = searchEl.value.toLowerCase();
-      const list = filtered.filter(c => c.name.toLowerCase().includes(q));
-      listEl.innerHTML = list.length ? list.map(c => `
-        <div class="item" onclick="playById('${c.id}')">
-          <img src="${c.logo || ''}" onerror="this.src='https://via.placeholder.com/60x40?text=No+Logo'" />
-          <span>${c.name}</span>
-        </div>`).join('') : '<p style="padding:1rem;">No channels found.</p>';
+
+      const list = filtered
+        .filter(c => c.name.toLowerCase().includes(q))
+        .sort((a, b) => {
+          const aFav = isFavorite(a.id);
+          const bFav = isFavorite(b.id);
+          if (aFav && !bFav) return -1;
+          if (!aFav && bFav) return 1;
+          return a.name.localeCompare(b.name);
+        });
+
+      listEl.innerHTML = list.length
+        ? list.map(c => `
+          <div class="item" onclick="playById('${c.id}')">
+            <div class="item-content">
+              <img src="${c.logo || ''}" onerror="this.src='https://via.placeholder.com/60x40?text=No+Logo'" />
+              <span>${c.name}</span>
+            </div>
+            <span class="fav-btn ${isFavorite(c.id) ? '' : 'not-fav'}" onclick="event.stopPropagation(); toggleFavorite('${c.id}')">★</span>
+          </div>`).join('')
+        : '<p style="padding:1rem;">No channels found.</p>';
     }
 
     function playById(id) {
       const c = filtered.find(ch => ch.id === id);
       if (!c) return;
       nowEl.textContent = `▶ ${c.name}`;
+      localStorage.setItem('lastChannel', id);
       if (window.hls) window.hls.destroy();
       if (Hls.isSupported()) {
         const hls = new Hls();
@@ -372,6 +421,12 @@
       video.play().catch(console.error);
     }
 
+    function clearSearch() {
+      searchEl.value = '';
+      render();
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
     init();
   </script>
 </body>
